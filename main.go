@@ -19,11 +19,19 @@ func main() {
 		panic(red(err.Error()))
 	}
 
+	// Retrieve all the grouping policies named "g"
 	g := e.GetNamedGroupingPolicy("g")
+
+	// Iterate over each grouping policy in the retrieved list
 	for _, gp := range g {
+		// Check if the grouping policy has exactly 5 parameters
+		// Due to the specific structure expected by AddNamedDomainLinkConditionFunc
 		if len(gp) != 5 {
 			panic("g parameters' num isn't 5")
 		}
+
+		// Adds a domain link condition function for the "g" type policies
+		// This function is used to match or evaluate conditions based on time constraints
 		e.AddNamedDomainLinkConditionFunc("g", gp[0], gp[1], gp[2], util.TimeMatchFunc)
 	}
 
